@@ -2,16 +2,16 @@ import random
 from faker import Faker
 fake = Faker(['en_GB'])
 
-DATA_TEMPLATE_0 = ('I live at <<LOC>>', {'entities': [(10, 17, 'LOC')]})
-DATA_TEMPLATE_1 = ('My address is <<LOC>>', {'entities': [(14, 21, 'LOC')]})
-DATA_TEMPLATE_2 = ('Can I please request you help with my address <<LOC>>', {'entities': [(46, 53, 'LOC')]})
-DATA_TEMPLATE_3 = ('Can you please send to <<LOC>>', {'entities': [(23, 30, 'LOC')]})
-DATA_TEMPLATE_4 = ('You can find me here <<LOC>>', {'entities': [(21, 28, 'LOC')]})
-DATA_TEMPLATE_5 = ('My location is <<LOC>>', {'entities': [(15, 22, 'LOC')]})
-DATA_TEMPLATE_6 = ('Send it here please <<LOC>> and I will return asap', {'entities': [(20, 27, 'LOC')]})
-DATA_TEMPLATE_7 = ('Address: <<LOC>>', {'entities': [(9, 16, 'LOC')]})
-DATA_TEMPLATE_8 = ('How can I change my address details. My contact details are <<LOC>>', {'entities': [(60, 67, 'LOC')]})
-DATA_TEMPLATE_9 = ('Have moved to this new location <<LOC>> before I lived at some other address in town', {'entities': [(32, 39, 'LOC')]})
+DATA_TEMPLATE_0 = ('I live at <<LOCATION>>', {'entities': [(10, 22, 'LOCATION')]})
+DATA_TEMPLATE_1 = ('My address is <<LOCATION>>', {'entities': [(14, 26, 'LOCATION')]})
+DATA_TEMPLATE_2 = ('Can I please request you help with my address <<LOCATION>>', {'entities': [(46, 58, 'LOCATION')]})
+DATA_TEMPLATE_3 = ('Can you please send to <<LOCATION>>', {'entities': [(23, 35, 'LOCATION')]})
+DATA_TEMPLATE_4 = ('You can find me here <<LOCATION>>', {'entities': [(21, 33, 'LOCATION')]})
+DATA_TEMPLATE_5 = ('My location is <<LOCATION>>', {'entities': [(15, 27, 'LOCATION')]})
+DATA_TEMPLATE_6 = ('Send it here please <<LOCATION>> and I will return asap', {'entities': [(20, 32, 'LOCATION')]})
+DATA_TEMPLATE_7 = ('Address: <<LOCATION>>', {'entities': [(9, 21, 'LOCATION')]})
+DATA_TEMPLATE_8 = ('How can I change my address details. My contact details are <<LOCATION>>', {'entities': [(60, 72, 'LOCATION')]})
+DATA_TEMPLATE_9 = ('Have moved to this new location <<LOCATION>> before I lived at some other address in town', {'entities': [(32, 44, 'LOCATION')]})
 
 DATA_TEMPLATES = [DATA_TEMPLATE_0, DATA_TEMPLATE_1, DATA_TEMPLATE_2, DATA_TEMPLATE_3, DATA_TEMPLATE_4, DATA_TEMPLATE_5,
                   DATA_TEMPLATE_6, DATA_TEMPLATE_7, DATA_TEMPLATE_8, DATA_TEMPLATE_9]
@@ -19,10 +19,10 @@ DATA_TEMPLATES = [DATA_TEMPLATE_0, DATA_TEMPLATE_1, DATA_TEMPLATE_2, DATA_TEMPLA
 
 def create_entry(address, template):
     str = template[0]
-    str = str.replace('<<LOC>>', address)
+    str = str.replace('<<LOCATION>>', address)
     start_index = template[1]['entities'][0][0]
     end_index = template[1]['entities'][0][1]
-    indexes = (start_index, end_index - 7 + len(address), 'LOC') # -7 length of <<LOC>> string
+    indexes = (start_index, end_index - 12 + len(address), 'LOCATION') # -12 length of <<LOCATION>> string
     return (str, {'entities': [indexes]})
 
 cities = ['Bath', 'Ely', 'Birmingham', 'St Neots', 'Manchester', 'Southampton', 'Bradford', 'Nottingham', 'Bristol', 'Cambridge', 'Coventry',
@@ -43,7 +43,6 @@ def create_entries(no_of_entries):
         entry = create_entry(chosen_address, chosen_template)
         entries.append(entry)
     return entries
-
 
 if __name__ == '__main__':
     entries = create_entries(50)
